@@ -8,14 +8,18 @@ export default function createItemView(item) {
 
     const desc = document.createElement('h4');
     desc.textContent = item.description;
+    desc.style.fontStyle = 'italic'
+    desc.style.fontWeight = 'normal';
     desc.classList.add('desc');
 
     const dueDate = document.createElement('h4');
     dueDate.textContent = `Due date: ${item.dueDate}`;
+    dueDate.style.fontWeight = 'normal';
     dueDate.classList.add('dueDate');
 
     const priority = document.createElement('h4');
     priority.textContent = `Priority level: ${item.priority}`
+    priority.style.fontWeight = 'normal';
     priority.classList.add('priority');
 
     itemDiv.appendChild(title);
