@@ -1,0 +1,80 @@
+:root {
+    --dark-background-color: #1d1d1d;
+    --background-color: #232323;
+    --light-background-color: #5e5e5e;
+    --primary-color: #d82934;
+    --secondary-color: #d82934;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 1rem;
+
+    background-color: var(--background-color);
+    color: var(--light-background-color);
+    padding: 1rem;
+    padding-left: min(200px, 10rem);
+    padding-right: min(200px, 10rem);
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+
+    border-radius: 15px;
+    padding: 16px 24px 16px 24px;
+    background-color: var(--background-color);
+    color: var(--light-background-color);
+
+    font-weight: bold;
+}
+
+button:hover {
+    color: white;
+}
+
+button:active {
+    color: var(--primary-color);
+}
+
+div#header {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+
+    padding: 8px;
+    color: white;
+}
+
+div#projects-header, div#main-project {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div#projects {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+div#default {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+div#projects, div#default {
+    align-self: center;
+
+    border: 1px solid var(--sub-color);
+    border-radius: 25px;
+    padding: 8px;
+    background-color: var(--dark-background-color);
+}
