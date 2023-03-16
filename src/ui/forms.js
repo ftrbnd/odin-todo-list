@@ -10,7 +10,7 @@ export default function attachFormListeners() {
 
 function newProjectForm() {
     const projectsContainer = document.querySelector('div#projects');
-    const newProjectForm = document.querySelector('form#new-book');
+    const newProjectForm = document.querySelector('form#new-project');
 
     newProjectForm.addEventListener('submit', e => {
         e.preventDefault();

@@ -1,6 +1,6 @@
 export default function loadProjectsList() {
     const projectsContainer = document.querySelector('div#projects');
-    const newProjectForm = document.querySelector('form#new-book');
+    const newProjectForm = document.querySelector('form#new-project');
 
     const projectsHeader = document.createElement('div');
     projectsHeader.setAttribute('id', 'projects-header');
@@ -28,7 +28,7 @@ export default function loadProjectsList() {
 }
 
 function revealNewProjectForm() {
-    const newProjectForm = document.querySelector('form#new-book');
+    const newProjectForm = document.querySelector('form#new-project');
 
     console.log('newProjectButton click');
     if (!newProjectForm.style.display) {
