@@ -1,3 +1,5 @@
+import createItemView from "./item-view";
+
 export default function createProjectView(project) {
     const projectDiv = document.createElement('div');
     projectDiv.classList.add('project');
@@ -13,17 +15,26 @@ export default function createProjectView(project) {
     projectDiv.appendChild(h3);
     projectDiv.appendChild(h4);
 
-    projectDiv.addEventListener('click', openSelectedProject);
+    projectDiv.addEventListener('click', () => {
+        console.log(`${project.title} was selected`);
+
+        const projectName = document.querySelector('#main-project > h2');
+        projectName.textContent = project.title;
+
+        const projectItems = document.querySelector('div#todo-items');
+
+        if (project.items.length == 0) {
+            while (projectItems.firstChild) {
+                projectItems.removeChild(projectItems.firstChild);
+            }
+
+            return console.log(`${project.title} has no items`);
+        }
+
+        for (const item of project.items) {
+            projectItems.appendChild(createItemView(item));
+        }
+    });
 
     return projectDiv;
-}
-
-function openSelectedProject(event) {
-    event.stopPropagation();
-    console.log(`${event.target.tagName} was selected`);
-
-    // if (event.target.tagName == 'H3' || event.target.tagName == 'H4') {
-    // }
-
-    // const mainDisplayProject = document.querySelector('div#default');
 }

@@ -42,6 +42,9 @@ function newTodoItemForm() {
 
         defaultProject.appendChild(createItemView(newItem));
 
+        // now add it to the project object's item's list
+        
+
         newItemForm.reset();
         newItemForm.removeAttribute('style');
     });

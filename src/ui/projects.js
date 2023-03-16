@@ -18,7 +18,6 @@ export default function loadProjectsList() {
     projectsHeader.appendChild(newProjectButton);
 
     projectsContainer.insertBefore(projectsHeader, newProjectForm);
-    // projectsContainer.appendChild(projectsHeader);
 
     // const projects = document.createElement('div');
     // projects.id = 'projects';

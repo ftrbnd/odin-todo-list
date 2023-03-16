@@ -19,8 +19,9 @@ export default function loadDefaultProject() {
 
     defaultProject.insertBefore(projectHeader, newItemForm);
 
-    // const projectItems = document.createElement('div');
-    // projectItems.id = 'todo-items';
+    const projectItems = document.createElement('div');
+    projectItems.setAttribute('id', 'todo-items');
+    defaultProject.appendChild(projectItems);
 }
 
 function revealNewItemForm() {
