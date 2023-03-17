@@ -16,11 +16,26 @@ function newProjectForm() {
         e.preventDefault();
         const data = new FormData(e.target);
         const projectData = [...data.entries()];
-
         const newProject = new Project(projectData[0][1], projectData[1][1]);
-        console.log(newProject);
+        console.log('Created a new project: ', newProject);
+
+        let projectId;
+        try {
+            projectId = localStorage.getItem('user-projects').split(',').length + 1;
+            console.log(`New project id = ${projectId}`);
+        } catch (e) {
+            projectId = 1;
+            console.log("localStorage couldn't set the project id.");
+        }
+        localStorage.setItem(`project-${projectId}-name`, newProject.name);
+        localStorage.setItem(`project-${projectId}-desc`, newProject.description);
+        localStorage.setItem(`project-${projectId}-items`, newProject.items.join(','));
+
+        const userProjects = localStorage.getItem('user-projects') + `,${projectId}`;
+        localStorage.setItem('user-projects', userProjects);
 
         projectsContainer.appendChild(createProjectView(newProject));
+        console.log('Local storage now: ', localStorage);
 
         newProjectForm.reset();
         newProjectForm.removeAttribute('style');

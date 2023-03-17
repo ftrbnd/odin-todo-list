@@ -1,5 +1,5 @@
 export default function loadProjectsList() {
-    const projectsContainer = document.querySelector('div#projects');
+    const projectsSidebar = document.querySelector('div#projects');
     const newProjectForm = document.querySelector('form#new-project');
 
     const projectsHeader = document.createElement('div');
@@ -17,13 +17,20 @@ export default function loadProjectsList() {
 
     projectsHeader.appendChild(newProjectButton);
 
-    projectsContainer.insertBefore(projectsHeader, newProjectForm);
+    projectsSidebar.insertBefore(projectsHeader, newProjectForm);
 
-    // const projects = document.createElement('div');
-    // projects.id = 'projects';
-    // for (const project of projects) {
-    //     // add to container div
-    // }
+    const projectsDiv = document.createElement('div');
+    projectsDiv.id = 'projects-list';
+
+    let projects;
+    try {
+        projects = localStorage.getItem('user-projects').split(',');
+    } catch (e) {
+        return console.log('localStorage found no projects.');
+    }
+    for (const project of projects) {
+        // add to projectsContainer div
+    }
 }
 
 function revealNewProjectForm() {

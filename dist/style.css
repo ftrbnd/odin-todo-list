@@ -88,11 +88,34 @@ div#header {
     color: white;
 }
 
-div#projects-header, div#main-project {
+div#projects-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+}
+
+div#main-project {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 2fr auto;
+}
+
+#main-project > h2 {
+    grid-row: 1;
+    grid-column: 1;
+    
+    margin-bottom: 0;
+}
+
+#main-project > p {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+#main-project > button {
+    grid-row: 1;
+    grid-column: 2;
 }
 
 div#projects {
