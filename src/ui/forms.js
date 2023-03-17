@@ -34,8 +34,21 @@ function newProjectForm() {
         const userProjects = localStorage.getItem('user-projects') + `,${projectId}`;
         localStorage.setItem('user-projects', userProjects);
 
-        projectsContainer.appendChild(createProjectView(newProject));
+        projectsContainer.appendChild(createProjectView(newProject, projectId));
         console.log('Local storage after adding project: ', localStorage);
+
+        localStorage.setItem('main-project-id', projectId);
+
+        const mainProject = document.querySelector('div#todo-items');
+        while (mainProject.firstChild) {
+            mainProject.removeChild(mainProject.firstChild);
+        }
+
+        const mainProjectName = document.querySelector('div#main-project > h2');
+        mainProjectName.textContent = newProject.title;
+        
+        const mainProjectDesc = document.querySelector('div#main-project > p');
+        mainProjectDesc.textContent = newProject.description;
 
         newProjectForm.reset();
         newProjectForm.removeAttribute('style');
@@ -43,7 +56,7 @@ function newProjectForm() {
 }
 
 function newTodoItemForm() {
-    const defaultProject = document.querySelector('div#default');
+    const defaultProject = document.querySelector('div#todo-items');
     const newItemForm = document.querySelector('form#new-item');
 
     newItemForm.addEventListener('submit', e => {

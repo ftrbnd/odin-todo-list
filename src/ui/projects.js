@@ -35,7 +35,7 @@ export default function loadProjectsList() {
     console.log(`projects to load: ${projects}`);
 
     for (const projectId of projects) {
-        if (projectId == 'null') continue;
+        if (projectId == 'null' || projectId == 'default') continue;
 
         console.log(`cur project: ${projectId}`);
         projectsDiv.appendChild(createProjectView(new Project(
