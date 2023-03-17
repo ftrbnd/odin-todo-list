@@ -16,23 +16,29 @@ export default function createProjectView(project) {
     projectDiv.appendChild(h4);
 
     projectDiv.addEventListener('click', () => {
-        console.log(`${project.title} was selected`);
+        console.log(`Project "${project.title}" was selected`);
 
         const projectName = document.querySelector('#main-project > h2');
         projectName.textContent = project.title;
 
-        const projectItems = document.querySelector('div#todo-items');
+        let projectItems = document.querySelector('div#todo-items');
+
+        localStorage.setItem('main-project-id', localStorage.getItem('user-projects').length);
 
         if (project.items.length == 0) {
+            projectItems = document.querySelector('div#todo-items');
             while (projectItems.firstChild) {
                 projectItems.removeChild(projectItems.firstChild);
             }
 
-            return console.log(`${project.title} has no items`);
-        }
+            const projectDescription = document.querySelector('#main-project > p');
+            projectDescription.textContent = 'This project has no items';
 
-        for (const item of project.items) {
-            projectItems.appendChild(createItemView(item));
+            console.log(`${project.title} has no items`);
+        } else {
+            for (const item of project.items) {
+                projectItems.appendChild(createItemView(item));
+            }
         }
     });
 

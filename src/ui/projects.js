@@ -1,3 +1,6 @@
+import Project from '../classes/project';
+import createProjectView from '../class-views/project-view';
+
 export default function loadProjectsList() {
     const projectsSidebar = document.querySelector('div#projects');
     const newProjectForm = document.querySelector('form#new-project');
@@ -21,6 +24,7 @@ export default function loadProjectsList() {
 
     const projectsDiv = document.createElement('div');
     projectsDiv.id = 'projects-list';
+    projectsSidebar.appendChild(projectsDiv);
 
     let projects;
     try {
@@ -28,8 +32,16 @@ export default function loadProjectsList() {
     } catch (e) {
         return console.log('localStorage found no projects.');
     }
-    for (const project of projects) {
-        // add to projectsContainer div
+    console.log(`projects to load: ${projects}`);
+
+    for (const projectId of projects) {
+        if (projectId == 'null') continue;
+
+        console.log(`cur project: ${projectId}`);
+        projectsDiv.appendChild(createProjectView(new Project(
+            localStorage.getItem(`project-${projectId}-name`),
+            localStorage.getItem(`project-${projectId}-desc`)
+        )));
     }
 }
 
