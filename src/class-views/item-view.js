@@ -1,9 +1,21 @@
+/* eslint-disable no-undef */
 import dateFormat from "dateformat";
 
 export default function createItemView(item) {
     const itemDiv = createItemDiv(item);
+    
     itemDiv.addEventListener('click', () => { // toggle description and priority visibility
         console.log(`Item "${item.title}" was clicked`);
+
+        const allItems = document.querySelectorAll('.item');
+        for (const item of allItems) {
+            if (item == itemDiv) continue;
+
+            item.style.color = '#5e5e5e';
+            item.children[1].style.display = 'none';
+            item.children[3].style.display = 'none';
+        }
+        itemDiv.style.color = itemDiv.style.color == 'white' ? '#5e5e5e' : 'white';
 
         const description = itemDiv.children[1];
         description.style.display = description.style.display == 'none' ? 'block' : 'none';
