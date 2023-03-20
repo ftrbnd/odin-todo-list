@@ -1,39 +1,49 @@
+import generateUniqueId from "generate-unique-id";
 import createItemView from "../class-views/item-view";
-import createProjectView from "../class-views/project-view";
 import Project from "../classes/project";
 import TodoItem from "../classes/todo-item";
+   
+const defaultProjectDiv = document.querySelector('div#default');
 
 export default function loadDefaultProject() {
-    const defaultProjectDiv = document.querySelector('div#default');
-    const newItemForm = document.querySelector('form#new-item');
+    const mainProject = loadMainProject();
+    displayHeader();
+    displayItems(mainProject);
+}
 
-    localStorage.setItem('main-project-id', 'default');
-    
-    if (!localStorage.getItem('user-projects')) {
-        localStorage.setItem('user-projects', 'default');
+function loadMainProject() {
+    let MAIN_PROJECT_ID = localStorage.getItem('main-project-id');
+    if (!MAIN_PROJECT_ID) { // generate default project id
+        MAIN_PROJECT_ID = `project-${generateUniqueId()}`;
+        localStorage.setItem('main-project-id', MAIN_PROJECT_ID);
+
+        const newProject = new Project(MAIN_PROJECT_ID, 'Default Project', 'This is your default project');
+        localStorage.setItem(MAIN_PROJECT_ID, JSON.stringify(newProject));
+
+        let userProjects = localStorage.getItem('user-projects') || '';
+        userProjects += `${MAIN_PROJECT_ID},`;
+        localStorage.setItem('user-projects', userProjects);
     }
+    console.log(`Main project id: ${MAIN_PROJECT_ID}`);
+    
+    return JSON.parse(localStorage.getItem(MAIN_PROJECT_ID));
+}
+
+function displayHeader() {
+    const newItemForm = document.querySelector('form#new-item');
+    
+    const MAIN_PROJECT_ID = localStorage.getItem('main-project-id');
+    const mainProject = JSON.parse(localStorage.getItem(MAIN_PROJECT_ID));
 
     const projectHeader = document.createElement('div');
     projectHeader.setAttribute('id', 'main-project');
 
     const projectName = document.createElement('h2');
-    const defaultProjectTitle = localStorage.getItem('default-project-name');
-    if (defaultProjectTitle) {
-        projectName.textContent = defaultProjectTitle;
-    } else {
-        projectName.textContent = 'Default Project';
-        localStorage.setItem('project-default-name', 'Default Project');
-    }
+    projectName.textContent = mainProject.title;
     projectHeader.appendChild(projectName);
 
     const projectDescription = document.createElement('p');
-    const defaultProjectDesc = localStorage.getItem('default-project-desc');
-    if (defaultProjectDesc) {
-        projectDescription.textContent = defaultProjectDesc;
-    } else {
-        projectDescription.textContent = 'This is your default project';
-        localStorage.setItem('project-default-desc', 'This is your default project');
-    }
+    projectDescription.textContent = mainProject.description;
 
     const newItemButton = document.createElement('button');
     newItemButton.id = 'new-item';
@@ -43,44 +53,30 @@ export default function loadDefaultProject() {
     projectHeader.appendChild(projectDescription);
     projectHeader.appendChild(newItemButton);
     defaultProjectDiv.insertBefore(projectHeader, newItemForm);
+}
 
+function displayItems(project) {
     const projectItems = document.createElement('div');
     projectItems.setAttribute('id', 'todo-items');
     defaultProjectDiv.appendChild(projectItems);
 
-    let items;
-    try {
-        items = localStorage.getItem('project-default-items').split(',');
-    } catch (e) {
-        items = [];
-        localStorage.setItem('project-default-items', '');
-        console.log('localStorage found no items.');
-    }
-
-    for (const itemId of items) {
-        if (itemId == 'null' || !itemId) continue;
+    for (let item of project.items) {
+        item = JSON.parse(item);
         // create a div for this item and add it to projectItems div
         projectItems.appendChild(createItemView(new TodoItem(
-            localStorage.getItem(`project-default-item-${itemId}-name`),
-            localStorage.getItem(`project-default-item-${itemId}-desc`),
-            localStorage.getItem(`project-default-item-${itemId}-dueDate`),
-            localStorage.getItem(`project-default-item-${itemId}-priority`),
+            item.id,
+            item.title,
+            item.description,
+            item.dueDate,
+            item.priority,
         )));
     }
-
-    // add default project to sidebar
-    const defaultProject = new Project(
-        localStorage.getItem('project-default-name')
-    );
-
-    const projectsDiv = document.querySelector('div#projects-list');
-    projectsDiv.insertBefore(createProjectView(defaultProject, 'default'), projectsDiv.firstChild);
 }
 
 function revealNewItemForm() {
-    const newItemForm = document.querySelector('form#new-item');
-
     console.log('newItemButton click');
+
+    const newItemForm = document.querySelector('form#new-item');
     if (!newItemForm.style.display) {
         newItemForm.style.display = 'flex';
     } else {

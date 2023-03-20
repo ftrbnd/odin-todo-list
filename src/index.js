@@ -5,8 +5,8 @@ import attachFormListeners from "./ui/forms";
 
 function loadUI() {
     loadHeader();
-    loadProjectsList();
     loadDefaultProject();
+    loadProjectsList();
 
     attachFormListeners();
 }

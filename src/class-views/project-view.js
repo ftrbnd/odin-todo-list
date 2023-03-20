@@ -1,7 +1,6 @@
-import TodoItem from "../classes/todo-item";
 import createItemView from "./item-view";
 
-export default function createProjectView(project, id) {
+export default function createProjectView(project) {
     const projectDiv = document.createElement('div');
     projectDiv.classList.add('project');
 
@@ -11,57 +10,30 @@ export default function createProjectView(project, id) {
     projectDiv.appendChild(h3);
 
     projectDiv.addEventListener('click', () => {
-        if (localStorage.getItem('main-project-id') == id) return;
-
+        if (localStorage.getItem('main-project-id') == project.id) { // project is already being displayed
+            return console.log(`The same project was selected. (${project.title})`);
+        }
         console.log(`Project "${project.title}" was selected`);
+        localStorage.setItem('main-project-id', project.id);
 
-        const projectName = document.querySelector('#main-project > h2');
-        projectName.textContent = project.title;
+        const mainProjectHeader = document.querySelector('#main-project > h2');
+        mainProjectHeader.textContent = project.title;
+        const mainProjectDescription = document.querySelector('#main-project > p');
+        mainProjectDescription.textContent = project.description;
 
-        let projectItemsDiv = document.querySelector('div#todo-items');
-
-        if (project.title == 'Default Project') {
-            localStorage.setItem('main-project-id', 'default');
-        } else {
-            localStorage.setItem('main-project-id', localStorage.getItem('user-projects').split(',').length);
-        }
-
-        const projectItems = [];
-        const userProjects = localStorage.getItem('user-projects').split(',');
-        for (const projId of userProjects) {
-            if (projId == localStorage.getItem('main-project-id')) {
-                const projItems = localStorage.getItem(`project-${projId}-items`).split(',');
-                for (const itemId of projItems) {
-                    if (itemId == 'null' || !itemId) continue;
-
-                    console.log(`Found item #${itemId} under project #${projId}`);
-                    projectItems.push(new TodoItem(
-                        localStorage.getItem(`project-${projId}-item-${itemId}-name`),
-                        localStorage.getItem(`project-${projId}-item-${itemId}-desc`),
-                        localStorage.getItem(`project-${projId}-item-${itemId}-dueDate`),
-                        localStorage.getItem(`project-${projId}-item-${itemId}-priority`),
-                    ));
-                }
-            }
-        }
-
+        const projectItemsDiv = document.querySelector('div#todo-items');
         while (projectItemsDiv.firstChild) {
             projectItemsDiv.removeChild(projectItemsDiv.firstChild);
         }
-
-        const projectDescription = document.querySelector('#main-project > p');
-        if (projectItems.length == 0) {
-            projectDescription.textContent = 'This project has no items';
-            console.log(`${project.title} has no items`);
-        } else {   
-            projectDescription.textContent = project.description || 'This is your default project';
-
-            for (const item of projectItems) {
-                if (!item) continue;
-                projectItemsDiv.appendChild(createItemView(item));
-            }
+        
+        const projectItems = JSON.parse(localStorage.getItem(project.id)).items;
+        console.log(projectItems);
+        for (let item of projectItems) {
+            if (!item) continue;
+        
+            item = JSON.parse(item);
+            projectItemsDiv.appendChild(createItemView(item));
         }
     });
-
     return projectDiv;
 }
