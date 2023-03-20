@@ -79,12 +79,25 @@ input {
     border-radius: 5px;
 }
 
+svg {
+    color: white;
+}
+
+h1 {
+    align-self: center;
+    font-size: 3rem;
+}
+
 div#header {
     grid-row: 1;
     grid-column: 1 / -1;
     justify-self: center;
 
-    padding: 8px;
+    display: flex;
+    gap: 8px;
+
+    height: 100px;
+    padding: 2rem;
     color: white;
 }
 
@@ -101,16 +114,19 @@ div#main-project {
     grid-template-columns: 2fr auto;
 }
 
-#main-project > h2 {
+div#main-project > h2 {
     grid-row: 1;
     grid-column: 1;
     
     margin-bottom: 0;
+    color: var(--primary-color);
 }
 
-#main-project > p {
+div#main-project > p {
     grid-row: 2;
     grid-column: 1;
+
+    color: white;
 }
 
 #main-project > button {
@@ -124,6 +140,10 @@ div#projects {
 
     display: flex;
     flex-direction: column;
+}
+
+div#projects-header > h2 {
+    color: var(--primary-color);
 }
 
 div.project, div.item {
