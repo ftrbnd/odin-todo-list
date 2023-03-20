@@ -35,5 +35,6 @@ export default function createProjectView(project) {
             projectItemsDiv.appendChild(createItemView(item));
         }
     });
+    
     return projectDiv;
 }
