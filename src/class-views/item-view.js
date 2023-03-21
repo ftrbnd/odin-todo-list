@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import dateFormat from "dateformat";
 
-let hoverId;
-
 export default function createItemView(item) {
     const itemDiv = createItemDiv(item);
     
@@ -15,16 +13,14 @@ export default function createItemView(item) {
             if (item == itemDiv) continue;
 
             item.style.color = '#5e5e5e';
-            item.children[1].style.display = 'none';
-            item.children[3].style.display = 'none';
+            item.children[2].style.display = 'none';
+            item.children[4].style.display = 'none';
         }
-        itemDiv.style.color = item.id == hoverId ? 'white' : '#5e5e5e';
-
-        const description = itemDiv.children[1];
+        const description = itemDiv.children[2];
         description.style.display = description.style.display == 'none' ? 'block' : 'none';
         description.style.color = '#5e5e5e';
 
-        const priority = itemDiv.children[3];
+        const priority = itemDiv.children[4];
         priority.style.display = priority.style.display == 'none' ? 'block' : 'none';
 
         switch (item.priority) {
@@ -46,7 +42,6 @@ export default function createItemView(item) {
     itemDiv.addEventListener('mouseover', () => {    
         if (item.id == localStorage.getItem('current-active-item')) return;
 
-        hoverId = item.id;
         itemDiv.style.color = itemDiv.style.color == 'white' ? '#5e5e5e' : 'white';
     });
 
@@ -62,6 +57,10 @@ export default function createItemView(item) {
 function createItemDiv(item) {
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('item');
+
+    const uncheckedBox = document.createElement('img');
+    uncheckedBox.src = '../assets/checkbox-blank-outline-custom.png'
+    uncheckedBox.classList.add('unchecked');
 
     const title = document.createElement('h3');
     title.textContent = item.title;
@@ -87,6 +86,7 @@ function createItemDiv(item) {
     priority.classList.add('priority');
     priority.style.display = 'none';
 
+    itemDiv.appendChild(uncheckedBox);
     itemDiv.appendChild(title);
     itemDiv.appendChild(desc);
     itemDiv.appendChild(dueDate);

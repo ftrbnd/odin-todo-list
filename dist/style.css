@@ -156,29 +156,35 @@ div.project {
 div.item {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: auto auto;
+    grid-template-columns: min-content 1fr 1fr;
 
     padding: 8px;
+    gap: 8px;
+}
+
+div.item > .unchecked {
+    grid-row: 1 / -1;
+    grid-column: 1;
 }
 
 div.item > .title {
     grid-row: 1;
-    grid-column: 1;
+    grid-column: 2;
 }
 
 div.item > .desc {
     grid-row: 2;
-    grid-column: 1;
+    grid-column: 2;
 }
 
 div.item > .dueDate {
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 3;
 }
 
 div.item > .priority {
     grid-row: 2;
-    grid-column: 2;
+    grid-column: 3;
 }
 
 div.project:hover,
