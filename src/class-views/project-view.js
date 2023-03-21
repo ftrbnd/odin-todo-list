@@ -29,11 +29,12 @@ export default function createProjectView(project) {
         }
         
         const projectItems = JSON.parse(localStorage.getItem(project.id)).items;
-        console.log(projectItems);
-        for (let item of projectItems) {
-            if (!item) continue;
+        for (const itemId of projectItems) {
+            console.log('current item: ', itemId);
+            if (!itemId) continue;
         
-            item = JSON.parse(item);
+            const item = JSON.parse(localStorage.getItem(itemId));
+            console.log(item);
             projectItemsDiv.appendChild(createItemView(item));
         }
     });

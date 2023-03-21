@@ -60,8 +60,8 @@ function displayItems(project) {
     projectItems.setAttribute('id', 'todo-items');
     defaultProjectDiv.appendChild(projectItems);
 
-    for (let item of project.items) {
-        item = JSON.parse(item);
+    for (const itemId of project.items) {
+        const item = JSON.parse(localStorage.getItem(itemId));
         // create a div for this item and add it to projectItems div
         projectItems.appendChild(createItemView(new TodoItem(
             item.id,

@@ -87,11 +87,23 @@ function createItemDiv(item) {
     priority.classList.add('priority');
     priority.style.display = 'none';
 
+    const editIcon = document.createElement('img');
+    editIcon.src = '../assets/pencil-outline-dark.png';
+    editIcon.classList.add('edit');
+    attachEditListeners(editIcon, item, itemDiv);
+
+    const removeIcon = document.createElement('img');
+    removeIcon.src = '../assets/trash-can-dark.png';
+    removeIcon.classList.add('remove');
+    attachRemoveListeners(removeIcon, item, itemDiv);
+
     itemDiv.appendChild(uncheckedBox);
     itemDiv.appendChild(title);
     itemDiv.appendChild(desc);
     itemDiv.appendChild(dueDate);
     itemDiv.appendChild(priority);
+    itemDiv.appendChild(editIcon);
+    itemDiv.appendChild(removeIcon);
 
     return itemDiv;
 }
@@ -111,5 +123,44 @@ function attachCheckboxListeners(checkBox) {
         event.stopPropagation();
         checkBox.src = '../assets/checkbox-marked-custom.png';
         checkBox.classList.add('checked');
+    });
+}
+
+function attachEditListeners(editIcon, item, itemDiv) {
+    editIcon.addEventListener('mouseover', event => {
+        event.stopPropagation();
+
+        editIcon.src = '../assets/pencil-outline-white.png';
+    });
+
+    editIcon.addEventListener('mouseout', event => {
+        event.stopPropagation();
+
+        editIcon.src = '../assets/pencil-outline-dark.png';
+    });
+
+    editIcon.addEventListener('click', event => {
+        event.stopPropagation();
+        console.log(`Editing item "${item.title}"...`);
+
+    });
+}
+
+function attachRemoveListeners(removeIcon, item, itemDiv) {
+    removeIcon.addEventListener('mouseover', event => {
+        event.stopPropagation();
+
+        removeIcon.src = '../assets/trash-can-white.png';
+    });
+
+    removeIcon.addEventListener('mouseout', event => {
+        event.stopPropagation();
+        
+        removeIcon.src = '../assets/trash-can-dark.png';
+    });
+
+    removeIcon.addEventListener('click', event => {
+        event.stopPropagation();
+        console.log(`Removing item "${item.title}"...`);
     });
 }

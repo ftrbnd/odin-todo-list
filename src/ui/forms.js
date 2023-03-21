@@ -29,8 +29,9 @@ function newProjectForm() {
         const userProjects = localStorage.getItem('user-projects') + `${projectId},`;
         localStorage.setItem('user-projects', userProjects);
 
-
-        projectsList.appendChild(createProjectView(newProject));
+        const projectView = createProjectView(newProject);
+        projectsList.appendChild(projectView);
+        projectView.click();
         console.log('Local storage after adding project: ', localStorage);
         
         newProjectForm.reset();
@@ -55,8 +56,9 @@ function newTodoItemForm() {
         const currentProjectId = localStorage.getItem('main-project-id');
         const currentProject = JSON.parse(localStorage.getItem(currentProjectId));
 
-        currentProject.items.push(JSON.stringify(newItem));
+        currentProject.items.push(itemId);
         localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
+        localStorage.setItem(itemId, JSON.stringify(newItem));
 
         mainProjectItems.appendChild(createItemView(newItem));
         console.log('Local storage after adding item: ', localStorage);        

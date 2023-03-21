@@ -156,7 +156,7 @@ div.project {
 div.item {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: min-content 1fr 1fr;
+    grid-template-columns: min-content 1fr 1fr min-content min-content;
 
     padding: 8px;
     gap: 8px;
@@ -185,6 +185,16 @@ div.item > .dueDate {
 div.item > .priority {
     grid-row: 2;
     grid-column: 3;
+}
+
+div.item > .edit {
+    grid-row: 1;
+    grid-column: 4;
+}
+
+div.item > .remove {
+    grid-row: 1;
+    grid-column: 5;
 }
 
 div.project:hover,
