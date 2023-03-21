@@ -61,7 +61,7 @@ function createItemDiv(item) {
     const uncheckedBox = document.createElement('img');
     uncheckedBox.src = '../assets/checkbox-blank-outline-custom.png'
     uncheckedBox.classList.add('unchecked');
-    attachCheckboxListeners(uncheckedBox);
+    attachCheckboxListeners(uncheckedBox, item, itemDiv);
 
     const title = document.createElement('h3');
     title.textContent = item.title;
@@ -108,7 +108,7 @@ function createItemDiv(item) {
     return itemDiv;
 }
 
-function attachCheckboxListeners(checkBox) {
+function attachCheckboxListeners(checkBox, item, itemDiv) {
     checkBox.addEventListener('mouseover', () => {
         if (checkBox.classList.contains('checked')) return;
         checkBox.src = '../assets/checkbox-intermediate-variant-custom.png'
@@ -123,6 +123,18 @@ function attachCheckboxListeners(checkBox) {
         event.stopPropagation();
         checkBox.src = '../assets/checkbox-marked-custom.png';
         checkBox.classList.add('checked');
+        console.log(`Marking "${item.title}" as completed...`);
+    
+        itemDiv.remove();
+        removeItemFromProject(item);
+
+        let completedItems = localStorage.getItem('completed-items');
+        if (!completedItems) {
+            localStorage.setItem('completed-items', `${item.id},`);
+        } else {
+            completedItems = completedItems += `${item.id},`;
+            localStorage.setItem('completed-items', completedItems);
+        }
     });
 }
 
@@ -165,10 +177,13 @@ function attachRemoveListeners(removeIcon, item, itemDiv) {
 
         itemDiv.remove();
         localStorage.removeItem(item.id);
-
-        const currentProjectId = localStorage.getItem('main-project-id');
-        const currentProject = JSON.parse(localStorage.getItem(currentProjectId));
-        currentProject.items.splice(currentProject.items.indexOf(item.id), 1);
-        localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
+        removeItemFromProject(item);
     });
+}
+
+function removeItemFromProject(item) {
+    const currentProjectId = localStorage.getItem('main-project-id');
+    const currentProject = JSON.parse(localStorage.getItem(currentProjectId));
+    currentProject.items.splice(currentProject.items.indexOf(item.id), 1);
+    localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
 }
