@@ -1,11 +1,14 @@
 /* eslint-disable no-undef */
 import dateFormat from "dateformat";
 
+let hoverId;
+
 export default function createItemView(item) {
     const itemDiv = createItemDiv(item);
     
     itemDiv.addEventListener('click', () => { // toggle description and priority visibility
         console.log(`Item "${item.title}" was clicked`);
+        localStorage.setItem('current-active-item', item.id);
 
         const allItems = document.querySelectorAll('.item');
         for (const item of allItems) {
@@ -15,7 +18,7 @@ export default function createItemView(item) {
             item.children[1].style.display = 'none';
             item.children[3].style.display = 'none';
         }
-        itemDiv.style.color = itemDiv.style.color == 'white' ? '#5e5e5e' : 'white';
+        itemDiv.style.color = item.id == hoverId ? 'white' : '#5e5e5e';
 
         const description = itemDiv.children[1];
         description.style.display = description.style.display == 'none' ? 'block' : 'none';
@@ -38,6 +41,19 @@ export default function createItemView(item) {
                 priority.style.color = 'red';
                 break;
         }
+    });
+
+    itemDiv.addEventListener('mouseover', () => {    
+        if (item.id == localStorage.getItem('current-active-item')) return;
+
+        hoverId = item.id;
+        itemDiv.style.color = itemDiv.style.color == 'white' ? '#5e5e5e' : 'white';
+    });
+
+    itemDiv.addEventListener('mouseout', () => {
+        if (item.id == localStorage.getItem('current-active-item')) return;
+
+        itemDiv.style.color = itemDiv.style.color == '#5e5e5e' ? 'white' : '#5e5e5e';
     });
 
     return itemDiv;
