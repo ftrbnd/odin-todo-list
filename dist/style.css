@@ -162,7 +162,7 @@ div.item {
     gap: 8px;
 }
 
-div.item > .unchecked {
+div.item > .unchecked, div.item > .checked {
     grid-row: 1 / -1;
     grid-column: 1;
 }

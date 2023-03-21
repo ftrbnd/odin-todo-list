@@ -61,6 +61,7 @@ function createItemDiv(item) {
     const uncheckedBox = document.createElement('img');
     uncheckedBox.src = '../assets/checkbox-blank-outline-custom.png'
     uncheckedBox.classList.add('unchecked');
+    attachCheckboxListeners(uncheckedBox);
 
     const title = document.createElement('h3');
     title.textContent = item.title;
@@ -93,4 +94,22 @@ function createItemDiv(item) {
     itemDiv.appendChild(priority);
 
     return itemDiv;
+}
+
+function attachCheckboxListeners(checkBox) {
+    checkBox.addEventListener('mouseover', () => {
+        if (checkBox.classList.contains('checked')) return;
+        checkBox.src = '../assets/checkbox-intermediate-variant-custom.png'
+    });
+
+    checkBox.addEventListener('mouseout', () => {
+        if (checkBox.classList.contains('checked')) return;
+        checkBox.src = '../assets/checkbox-blank-outline-custom.png'
+    });
+
+    checkBox.addEventListener('click', event => {
+        event.stopPropagation();
+        checkBox.src = '../assets/checkbox-marked-custom.png';
+        checkBox.classList.add('checked');
+    });
 }
