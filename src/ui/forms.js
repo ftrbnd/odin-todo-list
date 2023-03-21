@@ -60,7 +60,9 @@ function newTodoItemForm() {
         localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
         localStorage.setItem(itemId, JSON.stringify(newItem));
 
-        mainProjectItems.appendChild(createItemView(newItem));
+        const itemView = createItemView(newItem);
+        mainProjectItems.appendChild(itemView);
+        itemView.click();
         console.log('Local storage after adding item: ', localStorage);        
 
         newItemForm.reset();
