@@ -19,9 +19,25 @@ export default function createItemView(item) {
 
         const description = itemDiv.children[1];
         description.style.display = description.style.display == 'none' ? 'block' : 'none';
+        description.style.color = '#5e5e5e';
 
         const priority = itemDiv.children[3];
         priority.style.display = priority.style.display == 'none' ? 'block' : 'none';
+
+        switch (item.priority) {
+            case 1:
+            case '1':
+                priority.style.color = 'green';
+                break;
+            case 2:
+            case '2':
+                priority.style.color = 'yellow';
+                break;
+            case 3:
+            case '3':
+                priority.style.color = 'red';
+                break;
+        }
     });
 
     return itemDiv;
