@@ -162,5 +162,13 @@ function attachRemoveListeners(removeIcon, item, itemDiv) {
     removeIcon.addEventListener('click', event => {
         event.stopPropagation();
         console.log(`Removing item "${item.title}"...`);
+
+        itemDiv.remove();
+        localStorage.removeItem(item.id);
+
+        const currentProjectId = localStorage.getItem('main-project-id');
+        const currentProject = JSON.parse(localStorage.getItem(currentProjectId));
+        currentProject.items.splice(currentProject.items.indexOf(item.id), 1);
+        localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
     });
 }
