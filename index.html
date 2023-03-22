@@ -53,6 +53,30 @@
                     <input type="number" id="priority" name="item_priority" placeholder="1 low, 2 mid, 3 high" min="1" max="3" />
                 </div>
             </div>
+            <button id="submit-edit" type="submit">OK</button>
+        </form>
+    </div>
+    <div class="edit-item">
+        <form id="edit" hidden>
+            <h3>Edit Item</h3>
+            <div class="inputs">
+                <div>
+                    <label for="new_title">Title</label>
+                    <input type="text" id="new_title" name="item_title" required />
+                </div>
+                <div>
+                    <label for="new_desc">Description</label>
+                    <input type="text" id="new_desc" name="item_desc" />
+                </div>
+                <div>
+                    <label for="new_due">Due Date</label>
+                    <input type="datetime-local" id="new_due" name="due_date" />
+                </div>
+                <div>
+                    <label for="new_priority">Priority</label>
+                    <input type="number" id="new_priority" name="item_priority" min="1" max="3" />
+                </div>
+            </div>
             <button id="submit" type="submit">Submit</button>
         </form>
     </div>

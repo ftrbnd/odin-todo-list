@@ -45,7 +45,7 @@ button:active {
     color: var(--primary-color);
 }
 
-button#submit {
+button#submit, button#submit-edit {
     padding: 8px 12px 8px 12px;
 }
 
@@ -238,4 +238,11 @@ div#projects, div#default, div#completed {
 div#completed {
     grid-row: 3;
     grid-column: 1;
+}
+
+form#edit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
