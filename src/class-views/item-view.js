@@ -168,7 +168,7 @@ function attachEditListeners(editIcon, item, itemDiv) {
         const editDescription = document.querySelector('input#new_desc');
         editDescription.value = item.description;
         const editDate = document.querySelector('input#new_due');
-        editDate.value = item.dueDate; // make this work properly
+        editDate.value = item.dueDate.substring(0, 16); // make this work properly
         const editPriority = document.querySelector('input#new_priority');
         editPriority.value = item.priority;
 
