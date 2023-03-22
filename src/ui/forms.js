@@ -3,7 +3,8 @@ const generateUniqueId = require('generate-unique-id');
 import Project from '../classes/project';
 import createProjectView from '../class-views/project-view';
 import TodoItem from '../classes/todo-item';
-import { createItemView } from '../class-views/item-view';
+import { createItemView, toggleWindowOpacity } from '../class-views/item-view';
+import loadDefaultProject from './default';
 
 export default function attachFormListeners() {
     newProjectForm();
@@ -72,7 +73,6 @@ function newTodoItemForm() {
 }
 
 function editItemForm() {
-    const editDiv = document.querySelector('div#edit-item');
     const editItemForm = document.querySelector('form#edit');
 
     editItemForm.addEventListener('submit', e => {
@@ -82,9 +82,14 @@ function editItemForm() {
         const itemData = [...data.entries()];
 
         const itemId = localStorage.getItem('current-active-item');
-        const currentItem = JSON.parse(itemId);
+        // const currentItem = JSON.parse(localStorage.getItem(itemId));
         const editedItem = new TodoItem(itemId, itemData[0][1], itemData[1][1], itemData[2][1], itemData[3][1]);
+        console.log('Edited item: ', editedItem);
 
+        localStorage.setItem(itemId, JSON.stringify(editedItem));
+        loadDefaultProject();
+
+        toggleWindowOpacity();
         editItemForm.reset();
         editItemForm.removeAttribute('style');
     });

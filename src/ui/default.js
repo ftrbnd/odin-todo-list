@@ -6,9 +6,18 @@ import TodoItem from "../classes/todo-item";
 const defaultProjectDiv = document.querySelector('div#default');
 
 export default function loadDefaultProject() {
+    resetDiv();
     const mainProject = loadMainProject();
     displayHeader();
     displayItems(mainProject);
+}
+
+function resetDiv() {
+    for (const child of defaultProjectDiv.children) {
+        console.log(child);
+        if (child != document.querySelector('form#new-item'))
+            child.remove();
+    }
 }
 
 function loadMainProject() {
@@ -25,6 +34,7 @@ function loadMainProject() {
         localStorage.setItem('user-projects', userProjects);
     }
     console.log(`Main project id: ${MAIN_PROJECT_ID}`);
+    localStorage.setItem('display-edit-form', 'true');
     
     return JSON.parse(localStorage.getItem(MAIN_PROJECT_ID));
 }

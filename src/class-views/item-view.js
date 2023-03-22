@@ -159,7 +159,6 @@ function attachEditListeners(editIcon, item, itemDiv) {
     editIcon.addEventListener('click', event => {
         event.stopPropagation();
         console.log(`Editing item "${item.title}"...`);
-        localStorage.setItem('current-active-item', item.id);
 
         const editItemForm = document.querySelector('form#edit');
         populateEditForm(item);
@@ -184,11 +183,26 @@ function populateEditForm(item) {
     editPriority.value = item.priority;
 }
 
-function toggleWindowOpacity(editItemForm) {
-    const body = document.querySelector('body');
-    body.classList.add('darken-body');
+export function toggleWindowOpacity() {
+    const toggle = localStorage.getItem('display-edit-form') ?? 'true';
+    const editItemForm = document.querySelector('form#edit');
+    const inputs = document.querySelectorAll('#edit input');
 
-    editItemForm.style.opacity = '1';
+    const body = document.querySelector('body');
+    body.classList.toggle('darken-body');
+
+    if (toggle == 'true') {
+        body.style.cursor = 'not-allowed';
+        localStorage.setItem('display-edit-form', 'false');
+    } else {
+        body.style.cursor = 'cursor';
+        localStorage.setItem('display-edit-form', 'true');
+    }
+
+    editItemForm.style.cursor = 'default';
+    for (const input of inputs) {
+        input.style.cursor = 'text';
+    }
 }
 
 function attachRemoveListeners(removeIcon, item, itemDiv) {
