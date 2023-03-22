@@ -159,18 +159,11 @@ function attachEditListeners(editIcon, item, itemDiv) {
     editIcon.addEventListener('click', event => {
         event.stopPropagation();
         console.log(`Editing item "${item.title}"...`);
-
         localStorage.setItem('current-active-item', item.id);
-        const editItemForm = document.querySelector('form#edit');
 
-        const editTitle = document.querySelector('input#new_title');
-        editTitle.value = item.title;
-        const editDescription = document.querySelector('input#new_desc');
-        editDescription.value = item.description;
-        const editDate = document.querySelector('input#new_due');
-        editDate.value = item.dueDate.substring(0, 16); // make this work properly
-        const editPriority = document.querySelector('input#new_priority');
-        editPriority.value = item.priority;
+        const editItemForm = document.querySelector('form#edit');
+        populateEditForm(item);
+        toggleWindowOpacity(editItemForm);
 
         if (!editItemForm.style.display) {
             editItemForm.style.display = 'flex';
@@ -178,6 +171,24 @@ function attachEditListeners(editIcon, item, itemDiv) {
             editItemForm.removeAttribute('style');
         }
     });
+}
+
+function populateEditForm(item) {
+    const editTitle = document.querySelector('input#new_title');
+    editTitle.value = item.title;
+    const editDescription = document.querySelector('input#new_desc');
+    editDescription.value = item.description;
+    const editDate = document.querySelector('input#new_due');
+    editDate.value = item.dueDate.substring(0, 16); // make this work properly
+    const editPriority = document.querySelector('input#new_priority');
+    editPriority.value = item.priority;
+}
+
+function toggleWindowOpacity(editItemForm) {
+    const body = document.querySelector('body');
+    body.classList.add('darken-body');
+
+    editItemForm.style.opacity = '1';
 }
 
 function attachRemoveListeners(removeIcon, item, itemDiv) {

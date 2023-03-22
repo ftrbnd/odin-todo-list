@@ -54,7 +54,8 @@ form {
     align-items: center;
     gap: 8px;
     
-    padding: 8px;
+    padding: 16px;
+    border-radius: 25px;
 }
 
 div.inputs {
@@ -247,6 +248,19 @@ form#edit {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    background-color: var(--light-background-color);
+    color: white;
+    padding: 48px 192px;
+    box-shadow: 4px 4px 4px 4px #383838;
+}
+
+form#edit input {
+    background-color: var(--background-color);
+}
+
+#submit-edit {
+    color: white;
 }
 
 div.completed {
@@ -258,4 +272,9 @@ div.completed {
 div.completed > h4, div.completed > h5 {
     margin: 0;
     padding: 8px;
+}
+
+.darken-body {
+    background: #000;
+    opacity: 0.5;
 }

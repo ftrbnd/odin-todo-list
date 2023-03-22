@@ -19,13 +19,13 @@ export function displayCompleted() {
         console.log('Showing completed items...', completedItemIds);
         
         const completedHidden = localStorage.getItem('completed-hidden') ?? 'true';
-        toggleCompletedItems(countDescription, completedHidden, completedItemIds, completedDiv);
+        toggleCompletedItems(completedHidden, completedItemIds, completedDiv);
     });
 
     completedDiv.appendChild(countDescription);
 }
 
-function toggleCompletedItems(countDescription, completedHidden, completedItemIds, completedDiv) {
+function toggleCompletedItems(completedHidden, completedItemIds, completedDiv) {
     if (completedHidden == 'true') {
         for (const itemId of completedItemIds) {
             if (!itemId) continue;
