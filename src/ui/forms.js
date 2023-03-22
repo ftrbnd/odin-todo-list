@@ -8,6 +8,7 @@ import createItemView from '../class-views/item-view';
 export default function attachFormListeners() {
     newProjectForm();
     newTodoItemForm();
+    editItemForm();
 }
 
 function newProjectForm() {
@@ -67,5 +68,24 @@ function newTodoItemForm() {
 
         newItemForm.reset();
         newItemForm.removeAttribute('style');
+    });
+}
+
+function editItemForm() {
+    const editDiv = document.querySelector('div#edit-item');
+    const editItemForm = document.querySelector('form#edit');
+
+    editItemForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const data = new FormData(e.target);
+        const itemData = [...data.entries()];
+
+        const itemId = localStorage.getItem('current-active-item');
+        const currentItem = JSON.parse(itemId);
+        const editedItem = new TodoItem(itemId, itemData[0][1], itemData[1][1], itemData[2][1], itemData[3][1]);
+
+        editItemForm.reset();
+        editItemForm.removeAttribute('style');
     });
 }

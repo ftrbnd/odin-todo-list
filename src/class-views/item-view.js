@@ -160,6 +160,23 @@ function attachEditListeners(editIcon, item, itemDiv) {
         event.stopPropagation();
         console.log(`Editing item "${item.title}"...`);
 
+        localStorage.setItem('current-active-item', item.id);
+        const editItemForm = document.querySelector('form#edit');
+
+        const editTitle = document.querySelector('input#new_title');
+        editTitle.value = item.title;
+        const editDescription = document.querySelector('input#new_desc');
+        editDescription.value = item.description;
+        const editDate = document.querySelector('input#new_due');
+        editDate.value = item.dueDate; // make this work properly
+        const editPriority = document.querySelector('input#new_priority');
+        editPriority.value = item.priority;
+
+        if (!editItemForm.style.display) {
+            editItemForm.style.display = 'flex';
+        } else {
+            editItemForm.removeAttribute('style');
+        }
     });
 }
 
