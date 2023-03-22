@@ -1,4 +1,4 @@
-export default function displayCompleted() {
+export function displayCompleted() {
     const completedDiv = document.querySelector('div#completed');
 
     const h2 = document.createElement('h2');
@@ -17,16 +17,19 @@ export default function displayCompleted() {
         console.log('Showing completed items...', completedItemIds);
         for (const itemId of completedItemIds) {
             if (!itemId) continue;
-            console.log(`Found a completed item: ${itemId}`);
             
-            // do stuff
+            const item = JSON.parse(localStorage.getItem(itemId));
+            console.log('Found an item: ', item);
+
+            // create item view for a completed item
+            // add it to completed tab - on default div?
         }
     });
 
     completedDiv.appendChild(countDescription);
 }
 
-function updateCompletedCount(completedItemIds) {
+export function updateCompletedCount(completedItemIds) {
     let description, completedCount = 0;
     if (completedItemIds.length == 1) {
         description = '0 items';

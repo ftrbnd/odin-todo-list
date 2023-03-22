@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import dateFormat from "dateformat";
+import { updateCompletedCount } from "../ui/completed";
 
 export default function createItemView(item) {
     const itemDiv = createItemDiv(item);
@@ -128,13 +129,17 @@ function attachCheckboxListeners(checkBox, item, itemDiv) {
         itemDiv.remove();
         removeItemFromProject(item);
 
-        let completedItems = localStorage.getItem('completed-items');
-        if (!completedItems) {
+        let completedItemIds = localStorage.getItem('completed-items');
+        if (!completedItemIds) {
             localStorage.setItem('completed-items', `${item.id},`);
         } else {
-            completedItems = completedItems += `${item.id},`;
-            localStorage.setItem('completed-items', completedItems);
+            completedItemIds = completedItemIds += `${item.id},`;
+            localStorage.setItem('completed-items', completedItemIds);
         }
+
+        const completedCount = document.querySelector('div#completed > h3');
+        completedItemIds = completedItemIds.split(',');
+        completedCount.textContent = updateCompletedCount(completedItemIds);
     });
 }
 
