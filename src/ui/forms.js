@@ -3,7 +3,7 @@ const generateUniqueId = require('generate-unique-id');
 import Project from '../classes/project';
 import createProjectView from '../class-views/project-view';
 import TodoItem from '../classes/todo-item';
-import createItemView from '../class-views/item-view';
+import { createItemView } from '../class-views/item-view';
 
 export default function attachFormListeners() {
     newProjectForm();

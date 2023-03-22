@@ -1,5 +1,5 @@
 import generateUniqueId from "generate-unique-id";
-import createItemView from "../class-views/item-view";
+import { createItemView } from "../class-views/item-view";
 import Project from "../classes/project";
 import TodoItem from "../classes/todo-item";
    

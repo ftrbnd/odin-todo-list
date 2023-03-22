@@ -1,3 +1,5 @@
+import { createCompletedItemView } from "../class-views/item-view";
+
 export function displayCompleted() {
     const completedDiv = document.querySelector('div#completed');
 
@@ -15,18 +17,34 @@ export function displayCompleted() {
 
     countDescription.addEventListener('click', () => {
         console.log('Showing completed items...', completedItemIds);
+        
+        const completedHidden = localStorage.getItem('completed-hidden') ?? 'true';
+        toggleCompletedItems(countDescription, completedHidden, completedItemIds, completedDiv);
+    });
+
+    completedDiv.appendChild(countDescription);
+}
+
+function toggleCompletedItems(countDescription, completedHidden, completedItemIds, completedDiv) {
+    if (completedHidden == 'true') {
         for (const itemId of completedItemIds) {
             if (!itemId) continue;
             
             const item = JSON.parse(localStorage.getItem(itemId));
             console.log('Found an item: ', item);
 
-            // create item view for a completed item
-            // add it to completed tab - on default div?
-        }
-    });
+            const completedItemDiv = createCompletedItemView(item);
+            completedDiv.appendChild(completedItemDiv);
 
-    completedDiv.appendChild(countDescription);
+            localStorage.setItem('completed-hidden', 'false');
+        }
+    } else {
+        const completedItems = document.querySelectorAll('div.completed');
+        for (const item of completedItems) {
+            item.remove();
+        }
+        localStorage.setItem('completed-hidden', 'true');
+    }
 }
 
 export function updateCompletedCount(completedItemIds) {

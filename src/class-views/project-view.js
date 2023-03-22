@@ -1,4 +1,4 @@
-import createItemView from "./item-view";
+import { createItemView } from "./item-view";
 
 export default function createProjectView(project) {
     const projectDiv = createProjectDiv(project);

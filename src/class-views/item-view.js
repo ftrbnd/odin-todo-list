@@ -2,7 +2,7 @@
 import dateFormat from "dateformat";
 import { updateCompletedCount } from "../ui/completed";
 
-export default function createItemView(item) {
+export function createItemView(item) {
     const itemDiv = createItemDiv(item);
     
     itemDiv.addEventListener('click', () => { // toggle description and priority visibility
@@ -208,4 +208,19 @@ function removeItemFromProject(item) {
     const currentProject = JSON.parse(localStorage.getItem(currentProjectId));
     currentProject.items.splice(currentProject.items.indexOf(item.id), 1);
     localStorage.setItem(currentProjectId, JSON.stringify(currentProject));
+}
+
+export function createCompletedItemView(item) {
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('completed');
+
+    const title = document.createElement('h5');
+    title.textContent = item.title;
+    itemDiv.appendChild(title);
+
+    const date = document.createElement('h5');
+    date.textContent = dateFormat(new Date(item.dueDate), "mm/dd/yy, h:MM TT");
+    itemDiv.appendChild(date);
+
+    return itemDiv;
 }
