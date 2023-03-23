@@ -159,6 +159,7 @@ function attachEditListeners(editIcon, item, itemDiv) {
     editIcon.addEventListener('click', event => {
         event.stopPropagation();
         console.log(`Editing item "${item.title}"...`);
+        localStorage.setItem('current-active-item', item.id);
 
         const editItemForm = document.querySelector('form#edit');
         populateEditForm(item);
