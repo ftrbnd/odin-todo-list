@@ -8,7 +8,7 @@ export function displayCompleted() {
     completedDiv.appendChild(h2);
 
     let completedItemIds = localStorage.getItem('completed-items');
-    if (completedItemIds.length > 0)
+    if (completedItemIds)
         completedItemIds = completedItemIds.split(',');
 
     const countDescription = document.createElement('h3');
@@ -49,7 +49,7 @@ function toggleCompletedItems(completedHidden, completedItemIds, completedDiv) {
 
 export function updateCompletedCount(completedItemIds) {
     let description, completedCount = 0;
-    if (completedItemIds.length == 1) {
+    if (!completedItemIds) {
         description = '0 items';
     } else {
         for (const itemId of completedItemIds) {
